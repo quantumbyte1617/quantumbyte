@@ -77,16 +77,6 @@ export default function ReviewerPage() {
 
   const canSubmit = arabicFile && englishFile && status !== "uploading";
 
-  const safeJson = async (res: Response) => {
-    const text = await res.text();
-    if (!text) return {};
-    try {
-      return JSON.parse(text);
-    } catch {
-      return { detail: text };
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!arabicFile || !englishFile) return;
@@ -99,32 +89,25 @@ export default function ReviewerPage() {
       formData.append("arabic_file", arabicFile);
       formData.append("english_file", englishFile);
 
-      const uploadRes = await fetch("/api/FS_reviewer/upload", {
+      const res = await fetch("/api/FS_reviewer/analyze", {
         method: "POST",
         body: formData,
       });
 
-      const uploadData = await safeJson(uploadRes);
-
-      if (!uploadRes.ok) {
-        throw new Error(uploadData.detail || `Upload failed (${uploadRes.status})`);
+      const text = await res.text();
+      let data: Record<string, unknown> = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        throw new Error(text || `Server error (${res.status})`);
       }
 
-      const { session_id } = uploadData;
-      if (!session_id) {
-        throw new Error("Server did not return a session ID.");
+      if (!res.ok) {
+        throw new Error((data.detail as string) || `Analysis failed (${res.status})`);
       }
 
-      const reviewRes = await fetch(`/api/FS_reviewer/review/${session_id}`, {
-        method: "POST",
-      });
-
-      if (!reviewRes.ok) {
-        const reviewData = await safeJson(reviewRes);
-        throw new Error(reviewData.detail || `Failed to start review (${reviewRes.status})`);
-      }
-
-      router.push(`/FS_reviewer/review/${session_id}`);
+      sessionStorage.setItem("fs_review_results", JSON.stringify(data));
+      router.push("/FS_reviewer/results");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
       setStatus("error");

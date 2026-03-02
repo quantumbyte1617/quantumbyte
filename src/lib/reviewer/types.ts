@@ -1,11 +1,3 @@
-export type ReviewStatus =
-  | "pending"
-  | "extracting"
-  | "analyzing"
-  | "comparing"
-  | "completed"
-  | "failed";
-
 export type Severity = "critical" | "warning" | "info";
 
 export type FindingCategory =
@@ -39,22 +31,9 @@ export interface StatementSummary {
   issues_count: number;
 }
 
-export interface ReviewSession {
-  status: ReviewStatus;
-  progress: number;
-  current_step: string;
-  created_at: string;
-  arabic_filename: string;
-  english_filename: string;
-  arabic_text?: string;
-  english_text?: string;
-  results?: ReviewResults;
-  error?: string;
-}
-
 export interface ReviewResults {
   session_id: string;
-  status: ReviewStatus;
+  status: string;
   created_at: string;
   completed_at: string;
   arabic_filename: string;
