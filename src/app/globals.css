@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════
-   DEFAULT THEME: Apple-style Silver Grey
+   Theme: Light (default)
    ═══════════════════════════════════════════ */
 @theme {
   --color-bg-primary: #fbfbfd;
@@ -16,6 +16,10 @@
 
   --font-heading: "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --overlay-rgb: 0, 0, 0;
 }
 
 * {
@@ -36,14 +40,10 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ─── Adaptive overlay (black in light, white in dark) ─── */
-:root {
-  --overlay-rgb: 0, 0, 0;
-}
-
-/* ─── Dark Mode Override ─── */
+/* ═══════════════════════════════════════════
+   Theme: Dark
+   ═══════════════════════════════════════════ */
 [data-theme="dark"] {
-  --overlay-rgb: 255, 255, 255;
   --color-bg-primary: #0a0a0f;
   --color-bg-secondary: #111118;
   --color-bg-card: #14141e;
@@ -53,10 +53,11 @@ body {
   --color-text-primary: #f0f0f0;
   --color-text-muted: #888899;
   --color-border: #1e1e2e;
+  --overlay-rgb: 255, 255, 255;
 }
 
 /* ═══════════════════════════════════════════
-   Custom Scrollbar
+   Scrollbar
    ═══════════════════════════════════════════ */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--color-bg-primary); }
@@ -66,46 +67,7 @@ body {
 [data-theme="dark"] ::-webkit-scrollbar-thumb { background: #2a2a3e; }
 
 /* ═══════════════════════════════════════════
-   Glow Utilities (subtle in light, vibrant in dark)
-   ═══════════════════════════════════════════ */
-.glow-cyan {
-  box-shadow: 0 2px 12px rgba(0, 113, 227, 0.15);
-}
-.glow-cyan-sm {
-  box-shadow: 0 1px 8px rgba(0, 113, 227, 0.1);
-}
-.glow-purple {
-  box-shadow: 0 2px 12px rgba(124, 58, 237, 0.15);
-}
-.text-glow-cyan {
-  text-shadow: none;
-}
-
-[data-theme="dark"] .glow-cyan {
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 60px rgba(0, 240, 255, 0.1);
-}
-[data-theme="dark"] .glow-cyan-sm {
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2), 0 0 30px rgba(0, 240, 255, 0.05);
-}
-[data-theme="dark"] .glow-purple {
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
-}
-[data-theme="dark"] .text-glow-cyan {
-  text-shadow: 0 0 30px rgba(0, 240, 255, 0.5), 0 0 60px rgba(0, 240, 255, 0.2);
-}
-
-/* ═══════════════════════════════════════════
-   Gradient Text
-   ═══════════════════════════════════════════ */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ═══════════════════════════════════════════
-   Glass Effect (Header / Overlays)
+   Glass (Header)
    ═══════════════════════════════════════════ */
 .glass {
   background: rgba(255, 255, 255, 0.72);
@@ -122,106 +84,15 @@ body {
 }
 
 /* ═══════════════════════════════════════════
-   Glass Card (App cards, value cards)
+   Section Divider
    ═══════════════════════════════════════════ */
-.glass-card {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 0.35s ease;
-}
-.glass-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 113, 227, 0.2);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06), 0 0 20px rgba(0, 113, 227, 0.05);
+.section-glow-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent);
 }
 
-[data-theme="dark"] .glass-card {
-  background: rgba(20, 20, 30, 0.6);
-  border-color: rgba(255, 255, 255, 0.06);
-}
-[data-theme="dark"] .glass-card:hover {
-  border-color: rgba(0, 240, 255, 0.15);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 240, 255, 0.06);
-}
-
-/* ═══════════════════════════════════════════
-   Featured Card (Live apps)
-   ═══════════════════════════════════════════ */
-.featured-card {
-  background: linear-gradient(135deg, rgba(0, 113, 227, 0.04), rgba(124, 58, 237, 0.04));
-  border: 1px solid rgba(0, 113, 227, 0.12);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.featured-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 0 30px rgba(0, 113, 227, 0.06);
-}
-
-[data-theme="dark"] .featured-card {
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.06), rgba(139, 92, 246, 0.06));
-  border-color: rgba(0, 240, 255, 0.15);
-}
-[data-theme="dark"] .featured-card:hover {
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 240, 255, 0.1);
-}
-
-/* ═══════════════════════════════════════════
-   Floating Orb
-   ═══════════════════════════════════════════ */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.12;
-  pointer-events: none;
-}
-
-[data-theme="dark"] .orb {
-  opacity: 0.3;
-}
-
-/* ═══════════════════════════════════════════
-   Mesh Gradient Background
-   ═══════════════════════════════════════════ */
-.mesh-gradient {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0, 113, 227, 0.04) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(124, 58, 237, 0.04) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 50% at 50% 80%, rgba(191, 69, 128, 0.03) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-[data-theme="dark"] .mesh-gradient {
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0, 240, 255, 0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 50% at 50% 80%, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
-}
-
-/* ═══════════════════════════════════════════
-   Progress Bar
-   ═══════════════════════════════════════════ */
-.progress-bar {
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-}
-.progress-bar-fill {
-  height: 100%;
-  border-radius: 2px;
-  transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-[data-theme="dark"] .progress-bar {
-  background: rgba(255, 255, 255, 0.06);
+[data-theme="dark"] .section-glow-divider {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
 }
 
 /* ═══════════════════════════════════════════
@@ -253,51 +124,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════
-   Section Divider
-   ═══════════════════════════════════════════ */
-.section-glow-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 113, 227, 0.1), transparent);
-}
-
-[data-theme="dark"] .section-glow-divider {
-  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
-}
-
-/* ═══════════════════════════════════════════
-   JSON Syntax Highlighting
-   ═══════════════════════════════════════════ */
-.json-key { color: #0071e3; }
-.json-string { color: #16a34a; }
-.json-number { color: #7c3aed; }
-.json-boolean { color: #ea580c; }
-.json-null { color: #bf4580; font-style: italic; }
-.json-punctuation { color: #86868b; }
-
-[data-theme="dark"] .json-key { color: #00f0ff; }
-[data-theme="dark"] .json-string { color: #a3e635; }
-[data-theme="dark"] .json-number { color: #c084fc; }
-[data-theme="dark"] .json-boolean { color: #fb923c; }
-[data-theme="dark"] .json-null { color: #f472b6; }
-[data-theme="dark"] .json-punctuation { color: #888899; }
-
-/* ═══════════════════════════════════════════
-   Notify Section
-   ═══════════════════════════════════════════ */
-.notify-glass {
-  background: linear-gradient(135deg, rgba(0, 113, 227, 0.03), rgba(124, 58, 237, 0.03));
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 113, 227, 0.1);
-  border-radius: 16px;
-}
-
-[data-theme="dark"] .notify-glass {
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.04), rgba(139, 92, 246, 0.04));
-  border-color: rgba(0, 240, 255, 0.1);
-}
-
-/* ═══════════════════════════════════════════
-   Theme Toggle Button
+   Theme Toggle
    ═══════════════════════════════════════════ */
 .theme-toggle {
   width: 36px;
@@ -329,22 +156,18 @@ body {
 }
 
 /* ═══════════════════════════════════════════
-   Ambient Background Images
+   JSON Syntax Highlighting
    ═══════════════════════════════════════════ */
-.ambient-image {
-  opacity: 0.06;
-}
-[data-theme="dark"] .ambient-image {
-  opacity: 0.12;
-}
+.json-key { color: #0071e3; }
+.json-string { color: #16a34a; }
+.json-number { color: #7c3aed; }
+.json-boolean { color: #ea580c; }
+.json-null { color: #bf4580; font-style: italic; }
+.json-punctuation { color: #86868b; }
 
-/* ═══════════════════════════════════════════
-   Device Mockup Perspective
-   ═══════════════════════════════════════════ */
-.mockup-perspective {
-  transform: perspective(1200px) rotateY(-8deg) rotateX(3deg);
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.mockup-perspective:hover {
-  transform: perspective(1200px) rotateY(-2deg) rotateX(1deg);
-}
+[data-theme="dark"] .json-key { color: #00f0ff; }
+[data-theme="dark"] .json-string { color: #a3e635; }
+[data-theme="dark"] .json-number { color: #c084fc; }
+[data-theme="dark"] .json-boolean { color: #fb923c; }
+[data-theme="dark"] .json-null { color: #f472b6; }
+[data-theme="dark"] .json-punctuation { color: #888899; }

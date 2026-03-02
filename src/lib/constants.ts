@@ -11,18 +11,15 @@ import {
 
 export const siteConfig = {
   name: "QuantumByte",
-  tagline: "A platform of useful tools",
+  tagline: "Free tools that just work",
   description:
-    "Free, fast, and simple tools built to make your life easier. No sign-ups, no fluff — just tools that work.",
+    "Fast, free, and simple tools built to make your life easier. No sign-ups, no fluff.",
   email: "hello@quantumbyte.app",
 };
 
 export const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Apps", href: "#apps" },
+  { label: "Tools", href: "#tools" },
   { label: "Playground", href: "#playground" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export interface App {
@@ -30,45 +27,37 @@ export interface App {
   title: string;
   description: string;
   href: string;
-  status: "live";
   tags: string[];
   accent: string;
-  accentBg: string;
 }
 
 export const apps: App[] = [
   {
     icon: Download,
-    title: "Social Media Video Downloader",
+    title: "Video Downloader",
     description:
-      "Download videos from YouTube, Instagram, TikTok, Twitter, and more. Paste a link, pick a format, and download.",
+      "Download videos from YouTube, Instagram, TikTok, and more. Paste a link, pick a format, done.",
     href: "/Video_downloader",
-    status: "live",
     tags: ["YouTube", "Instagram", "TikTok", "Twitter"],
     accent: "text-accent-cyan",
-    accentBg: "bg-accent-cyan",
   },
   {
     icon: FileSearch,
-    title: "Financial Statements Reviewer",
+    title: "FS Reviewer",
     description:
       "AI-powered cross-checking of Arabic and English financial statements. Validates numbers, terminology, and IFRS compliance.",
     href: "/FS_reviewer",
-    status: "live",
     tags: ["Arabic/English", "IFRS", "Audit", "AI"],
     accent: "text-accent-purple",
-    accentBg: "bg-accent-purple",
   },
   {
     icon: MessageSquare,
     title: "AI Discussion",
     description:
-      "A real-time AI discussion room where Claude, GPT, and Gemini debate any topic you choose. Watch the models think, argue, and agree.",
+      "A real-time discussion room where Claude, GPT, and Gemini debate any topic you choose.",
     href: "/ai_discussion",
-    status: "live",
     tags: ["Claude", "GPT", "Gemini", "Real-time"],
     accent: "text-accent-pink",
-    accentBg: "bg-accent-pink",
   },
 ];
 

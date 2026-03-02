@@ -32,8 +32,10 @@ export async function POST(
     );
   }
 
-  // Start async review pipeline (fire and forget)
-  runReview(sessionId).catch(() => {});
+  // Start async review pipeline (fire and forget — errors are caught inside runReview)
+  runReview(sessionId).catch((err) => {
+    console.error(`[FS_reviewer] Unhandled review error for ${sessionId}:`, err);
+  });
 
   return NextResponse.json({
     session_id: sessionId,

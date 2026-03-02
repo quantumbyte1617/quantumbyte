@@ -22,7 +22,16 @@ async function extractDocx(buffer: Buffer): Promise<string> {
 }
 
 async function extractPdf(buffer: Buffer): Promise<string> {
-  const parser = new PDFParse({ data: buffer });
-  const result = await parser.getText();
-  return result.text;
+  const parser = new PDFParse({ data: new Uint8Array(buffer) });
+  try {
+    const result = await parser.getText();
+    if (!result.text || result.text.trim().length === 0) {
+      throw new Error(
+        "Could not extract text from the PDF. The file may be scanned/image-based."
+      );
+    }
+    return result.text;
+  } finally {
+    await parser.destroy().catch(() => {});
+  }
 }

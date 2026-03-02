@@ -169,13 +169,7 @@ export default function ReviewResultsPage() {
 
   return (
     <div className="min-h-screen bg-bg-primary text-text-primary">
-      {/* Background effects */}
-      <div className="mesh-gradient fixed inset-0 pointer-events-none" />
-      <div className="orb w-[600px] h-[600px] bg-accent-pink/10 -top-60 -right-40 fixed" />
-      <div className="orb w-[500px] h-[500px] bg-accent-purple/8 -bottom-40 -left-40 fixed" />
-      <div className="orb w-[300px] h-[300px] bg-accent-cyan/6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 fixed" />
-
-      <div className="relative z-10 max-w-5xl mx-auto px-5 py-10 md:py-16">
+      <div className="max-w-5xl mx-auto px-5 py-10 md:py-16">
         {/* Back link */}
         <motion.a
           href="/FS_reviewer"
@@ -198,7 +192,7 @@ export default function ReviewResultsPage() {
             <FileSearch size={34} className="text-accent-cyan" />
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
-            <span className="gradient-text">Review Results</span>
+            Review Results
           </h1>
           <p className="text-text-muted/50 text-sm font-mono">
             Session: {sessionId.slice(0, 8)}...
