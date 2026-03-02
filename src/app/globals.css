@@ -36,8 +36,14 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ─── Adaptive overlay (black in light, white in dark) ─── */
+:root {
+  --overlay-rgb: 0, 0, 0;
+}
+
 /* ─── Dark Mode Override ─── */
 [data-theme="dark"] {
+  --overlay-rgb: 255, 255, 255;
   --color-bg-primary: #0a0a0f;
   --color-bg-secondary: #111118;
   --color-bg-card: #14141e;

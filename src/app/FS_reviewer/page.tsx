@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 
 const checks = [
-  { icon: Hash, label: "Numbers Match", desc: "AR ↔ EN", color: "text-blue-400" },
+  { icon: Hash, label: "Numbers Match", desc: "AR \u2194 EN", color: "text-blue-400" },
   { icon: Calculator, label: "Totals Verified", desc: "Math check", color: "text-purple-400" },
   { icon: Scale, label: "Cross-Statement", desc: "Consistency", color: "text-cyan-400" },
   { icon: BookOpen, label: "Note References", desc: "Tie-back", color: "text-pink-400" },
@@ -41,6 +41,9 @@ const steps = [
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+/* Shorthand for the adaptive overlay */
+const ov = (a: number) => `rgba(var(--overlay-rgb),${a})`;
 
 export default function ReviewerPage() {
   const router = useRouter();
@@ -147,7 +150,10 @@ export default function ReviewerPage() {
           transition={{ delay: 0.1, duration: 0.6, ease }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center justify-center w-[72px] h-[72px] rounded-2xl bg-gradient-to-br from-accent-cyan/15 to-accent-purple/15 border border-accent-cyan/10 mb-6 shadow-[0_0_40px_rgba(0,240,255,0.08)]">
+          <div
+            className="inline-flex items-center justify-center w-[72px] h-[72px] rounded-2xl bg-gradient-to-br from-accent-cyan/15 to-accent-purple/15 border border-accent-cyan/10 mb-6"
+            style={{ boxShadow: "0 0 40px rgba(var(--overlay-rgb),0.04)" }}
+          >
             <FileSearch size={34} className="text-accent-cyan" />
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
@@ -206,8 +212,16 @@ export default function ReviewerPage() {
                       ? "bg-emerald-500/8 border border-emerald-500/20 shadow-[0_0_20px_rgba(34,197,94,0.06)]"
                       : dragOver === "arabic"
                       ? "bg-accent-cyan/8 border-2 border-dashed border-accent-cyan/40"
-                      : "bg-white/[0.02] border-2 border-dashed border-white/[0.06] hover:border-accent-cyan/20 hover:bg-accent-cyan/[0.03]"
+                      : "border-2 border-dashed"
                   }`}
+                  style={
+                    !arabicFile && dragOver !== "arabic"
+                      ? {
+                          background: ov(0.02),
+                          borderColor: ov(0.06),
+                        }
+                      : undefined
+                  }
                 >
                   <label className="cursor-pointer block">
                     <input
@@ -224,7 +238,10 @@ export default function ReviewerPage() {
                       </div>
                     ) : (
                       <div className="space-y-1.5 py-1">
-                        <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] group-hover:bg-accent-cyan/10 transition-colors">
+                        <div
+                          className="inline-flex items-center justify-center w-10 h-10 rounded-xl group-hover:bg-accent-cyan/10 transition-colors"
+                          style={{ background: ov(0.04) }}
+                        >
                           <Upload size={20} className="text-text-muted/30 group-hover:text-accent-cyan/60 transition-colors" />
                         </div>
                         <p className="text-sm text-text-muted/50 font-medium" dir="rtl">النسخة العربية</p>
@@ -249,8 +266,16 @@ export default function ReviewerPage() {
                       ? "bg-emerald-500/8 border border-emerald-500/20 shadow-[0_0_20px_rgba(34,197,94,0.06)]"
                       : dragOver === "english"
                       ? "bg-accent-cyan/8 border-2 border-dashed border-accent-cyan/40"
-                      : "bg-white/[0.02] border-2 border-dashed border-white/[0.06] hover:border-accent-cyan/20 hover:bg-accent-cyan/[0.03]"
+                      : "border-2 border-dashed"
                   }`}
+                  style={
+                    !englishFile && dragOver !== "english"
+                      ? {
+                          background: ov(0.02),
+                          borderColor: ov(0.06),
+                        }
+                      : undefined
+                  }
                 >
                   <label className="cursor-pointer block">
                     <input
@@ -267,7 +292,10 @@ export default function ReviewerPage() {
                       </div>
                     ) : (
                       <div className="space-y-1.5 py-1">
-                        <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] group-hover:bg-accent-cyan/10 transition-colors">
+                        <div
+                          className="inline-flex items-center justify-center w-10 h-10 rounded-xl group-hover:bg-accent-cyan/10 transition-colors"
+                          style={{ background: ov(0.04) }}
+                        >
                           <Upload size={20} className="text-text-muted/30 group-hover:text-accent-cyan/60 transition-colors" />
                         </div>
                         <p className="text-sm text-text-muted/50 font-medium">English Version</p>
@@ -295,7 +323,8 @@ export default function ReviewerPage() {
             <button
               type="submit"
               disabled={!canSubmit}
-              className="w-full py-4 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-2xl font-bold text-bg-primary text-[15px] hover:shadow-[0_6px_30px_rgba(0,240,255,0.2)] hover:brightness-110 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-none flex items-center justify-center gap-2.5 tracking-[0.3px] shadow-[0_4px_20px_rgba(0,240,255,0.12)]"
+              className="w-full py-4 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-2xl font-bold text-bg-primary text-[15px] hover:brightness-110 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-none flex items-center justify-center gap-2.5 tracking-[0.3px]"
+              style={{ boxShadow: "0 4px 20px rgba(var(--color-accent-cyan),0.12)" }}
             >
               {status === "uploading" ? (
                 <>
@@ -327,7 +356,11 @@ export default function ReviewerPage() {
               return (
                 <div
                   key={check.label}
-                  className="px-3 py-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] hover:bg-white/[0.04] transition-all duration-300 group"
+                  className="px-3 py-3 rounded-xl transition-all duration-300 group border"
+                  style={{
+                    background: ov(0.02),
+                    borderColor: ov(0.05),
+                  }}
                 >
                   <Icon
                     size={16}

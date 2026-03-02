@@ -17,7 +17,6 @@ import {
   Loader2,
   ShieldCheck,
   Sparkles,
-  Download,
 } from "lucide-react";
 
 type Tab = "findings" | "comparison" | "numbers";
@@ -96,10 +95,10 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const STATEMENT_LABELS: Record<string, string> = {
-  balance_sheet: "Balance Sheet / قائمة المركز المالي",
-  income_statement: "Income Statement / قائمة الدخل",
-  cash_flow: "Cash Flow / قائمة التدفقات النقدية",
-  equity_changes: "Equity Changes / قائمة التغيرات في حقوق الملكية",
+  balance_sheet: "Balance Sheet / \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0645\u0631\u0643\u0632 \u0627\u0644\u0645\u0627\u0644\u064a",
+  income_statement: "Income Statement / \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062f\u062e\u0644",
+  cash_flow: "Cash Flow / \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062a\u062f\u0641\u0642\u0627\u062a \u0627\u0644\u0646\u0642\u062f\u064a\u0629",
+  equity_changes: "Equity Changes / \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062a\u063a\u064a\u0631\u0627\u062a \u0641\u064a \u062d\u0642\u0648\u0642 \u0627\u0644\u0645\u0644\u0643\u064a\u0629",
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -110,6 +109,9 @@ const PROGRESS_STEPS = [
   { key: "comparing", label: "Compare", pct: 75 },
   { key: "completed", label: "Report", pct: 100 },
 ];
+
+/* Shorthand for the adaptive overlay */
+const ov = (a: number) => `rgba(var(--overlay-rgb),${a})`;
 
 export default function ReviewResultsPage() {
   const params = useParams();
@@ -192,7 +194,7 @@ export default function ReviewResultsPage() {
           transition={{ delay: 0.1, duration: 0.6, ease }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center justify-center w-[72px] h-[72px] rounded-2xl bg-gradient-to-br from-accent-cyan/15 to-accent-purple/15 border border-accent-cyan/10 mb-6 shadow-[0_0_40px_rgba(0,240,255,0.08)]">
+          <div className="inline-flex items-center justify-center w-[72px] h-[72px] rounded-2xl bg-gradient-to-br from-accent-cyan/15 to-accent-purple/15 border border-accent-cyan/10 mb-6">
             <FileSearch size={34} className="text-accent-cyan" />
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
@@ -212,10 +214,7 @@ export default function ReviewResultsPage() {
             className="playground-glass p-6 md:p-8 mb-8"
           >
             <div className="flex items-center gap-3 mb-6">
-              <Loader2
-                size={18}
-                className="text-accent-cyan animate-spin"
-              />
+              <Loader2 size={18} className="text-accent-cyan animate-spin" />
               <span className="text-sm text-text-muted font-medium">
                 {statusData.current_step}
               </span>
@@ -225,9 +224,12 @@ export default function ReviewResultsPage() {
             </div>
 
             {/* Progress bar */}
-            <div className="h-2 rounded-full bg-white/[0.04] overflow-hidden mb-8">
+            <div
+              className="h-2 rounded-full overflow-hidden mb-8"
+              style={{ background: ov(0.04) }}
+            >
               <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-accent-cyan to-accent-purple shadow-[0_0_12px_rgba(0,240,255,0.3)]"
+                className="h-full rounded-full bg-gradient-to-r from-accent-cyan to-accent-purple"
                 initial={{ width: 0 }}
                 animate={{ width: `${statusData.progress}%` }}
                 transition={{ duration: 0.5, ease }}
@@ -245,11 +247,20 @@ export default function ReviewResultsPage() {
                     <div
                       className={`w-9 h-9 rounded-xl mx-auto mb-2 flex items-center justify-center text-xs font-bold transition-all duration-500 ${
                         isDone
-                          ? "bg-gradient-to-br from-accent-cyan to-accent-purple text-bg-primary shadow-[0_0_16px_rgba(0,240,255,0.2)]"
+                          ? "bg-gradient-to-br from-accent-cyan to-accent-purple text-bg-primary"
                           : isActive
                           ? "bg-accent-cyan/15 text-accent-cyan border border-accent-cyan/30"
-                          : "bg-white/[0.03] text-text-muted/25 border border-white/[0.05]"
+                          : "text-text-muted/25"
                       }`}
+                      style={
+                        !isDone && !isActive
+                          ? {
+                              background: ov(0.03),
+                              borderWidth: 1,
+                              borderColor: ov(0.05),
+                            }
+                          : undefined
+                      }
                     >
                       {isDone ? <CheckCircle2 size={16} /> : step.label[0]}
                     </div>
@@ -276,7 +287,7 @@ export default function ReviewResultsPage() {
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="playground-glass p-6 md:p-8 mb-8 border border-red-500/15 shadow-[0_0_30px_rgba(239,68,68,0.06)]"
+            className="playground-glass p-6 md:p-8 mb-8 border border-red-500/15"
           >
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center flex-shrink-0">
@@ -289,7 +300,7 @@ export default function ReviewResultsPage() {
                 </p>
                 <a
                   href="/FS_reviewer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-xl text-sm font-bold text-bg-primary hover:shadow-[0_4px_20px_rgba(0,240,255,0.2)] hover:brightness-110 transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-xl text-sm font-bold text-bg-primary hover:brightness-110 transition-all duration-300"
                 >
                   <RotateCcw size={14} />
                   Start New Review
@@ -310,41 +321,21 @@ export default function ReviewResultsPage() {
               {/* Summary cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
                 {[
-                  {
-                    label: "Total Findings",
-                    value: results.total_findings,
-                    color: "text-text-primary",
-                    gradient: "from-white/[0.06] to-white/[0.02]",
-                    glow: "",
-                  },
-                  {
-                    label: "Critical",
-                    value: results.critical_count,
-                    color: "text-red-400",
-                    gradient: "from-red-500/10 to-red-500/[0.02]",
-                    glow: "shadow-[0_0_20px_rgba(239,68,68,0.06)]",
-                  },
-                  {
-                    label: "Warnings",
-                    value: results.warning_count,
-                    color: "text-amber-400",
-                    gradient: "from-amber-500/10 to-amber-500/[0.02]",
-                    glow: "shadow-[0_0_20px_rgba(245,158,11,0.06)]",
-                  },
-                  {
-                    label: "Info",
-                    value: results.info_count,
-                    color: "text-blue-400",
-                    gradient: "from-blue-500/10 to-blue-500/[0.02]",
-                    glow: "shadow-[0_0_20px_rgba(59,130,246,0.06)]",
-                  },
+                  { label: "Total Findings", value: results.total_findings, color: "text-text-primary" },
+                  { label: "Critical", value: results.critical_count, color: "text-red-400" },
+                  { label: "Warnings", value: results.warning_count, color: "text-amber-400" },
+                  { label: "Info", value: results.info_count, color: "text-blue-400" },
                 ].map((card, i) => (
                   <motion.div
                     key={card.label}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.05 * i, duration: 0.5, ease }}
-                    className={`rounded-2xl p-5 text-center bg-gradient-to-b ${card.gradient} border border-white/[0.06] ${card.glow} backdrop-blur-sm`}
+                    className={`rounded-2xl p-5 text-center backdrop-blur-sm border`}
+                    style={{
+                      background: ov(0.03),
+                      borderColor: ov(0.06),
+                    }}
                   >
                     <p className={`text-4xl font-bold ${card.color} tracking-tight`}>
                       {card.value}
@@ -385,14 +376,18 @@ export default function ReviewResultsPage() {
               >
                 <button
                   onClick={() => window.print()}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-text-muted hover:text-text-primary hover:bg-white/[0.06] hover:border-white/[0.1] transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm text-text-muted hover:text-text-primary transition-all duration-300 border"
+                  style={{
+                    background: ov(0.03),
+                    borderColor: ov(0.06),
+                  }}
                 >
                   <Printer size={14} />
                   Print Report
                 </button>
                 <a
                   href="/FS_reviewer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-xl text-sm font-bold text-bg-primary hover:shadow-[0_4px_20px_rgba(0,240,255,0.2)] hover:brightness-110 transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-xl text-sm font-bold text-bg-primary hover:brightness-110 transition-all duration-300"
                 >
                   <RotateCcw size={14} />
                   New Review
@@ -404,19 +399,15 @@ export default function ReviewResultsPage() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5, ease }}
-                className="flex gap-1 mb-6 p-1 bg-white/[0.03] border border-white/[0.05] rounded-2xl w-fit"
+                className="flex gap-1 mb-6 p-1 rounded-2xl w-fit border"
+                style={{
+                  background: ov(0.03),
+                  borderColor: ov(0.05),
+                }}
               >
                 {[
-                  {
-                    key: "findings" as Tab,
-                    label: "All Findings",
-                    icon: AlertTriangle,
-                  },
-                  {
-                    key: "comparison" as Tab,
-                    label: "Side-by-Side",
-                    icon: Languages,
-                  },
+                  { key: "findings" as Tab, label: "All Findings", icon: AlertTriangle },
+                  { key: "comparison" as Tab, label: "Side-by-Side", icon: Languages },
                   { key: "numbers" as Tab, label: "Numbers", icon: Hash },
                 ].map((tab) => {
                   const Icon = tab.icon;
@@ -426,8 +417,8 @@ export default function ReviewResultsPage() {
                       onClick={() => setActiveTab(tab.key)}
                       className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                         activeTab === tab.key
-                          ? "bg-gradient-to-r from-accent-cyan/15 to-accent-purple/10 text-accent-cyan shadow-[0_0_12px_rgba(0,240,255,0.08)]"
-                          : "text-text-muted/50 hover:text-text-primary hover:bg-white/[0.03]"
+                          ? "bg-gradient-to-r from-accent-cyan/15 to-accent-purple/10 text-accent-cyan"
+                          : "text-text-muted/50 hover:text-text-primary"
                       }`}
                     >
                       <Icon size={14} />
@@ -448,17 +439,10 @@ export default function ReviewResultsPage() {
                   {results.findings.length === 0 ? (
                     <div className="playground-glass p-10 text-center">
                       <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/10 mb-4">
-                        <CheckCircle2
-                          size={32}
-                          className="text-emerald-400"
-                        />
+                        <CheckCircle2 size={32} className="text-emerald-400" />
                       </div>
-                      <p className="text-text-primary font-bold text-lg">
-                        No discrepancies found
-                      </p>
-                      <p className="text-text-muted/50 text-sm mt-1">
-                        Both versions appear consistent.
-                      </p>
+                      <p className="text-text-primary font-bold text-lg">No discrepancies found</p>
+                      <p className="text-text-muted/50 text-sm mt-1">Both versions appear consistent.</p>
                     </div>
                   ) : (
                     results.findings.map((finding, i) => {
@@ -469,76 +453,58 @@ export default function ReviewResultsPage() {
                           key={finding.id}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            delay: 0.03 * i,
-                            duration: 0.4,
-                            ease,
-                          }}
+                          transition={{ delay: 0.03 * i, duration: 0.4, ease }}
                           className={`${config.bg} ${config.border} ${config.glow} border rounded-2xl p-5`}
                         >
                           <div className="flex items-start justify-between mb-3">
                             <div className="flex items-center gap-2">
-                              <SevIcon
-                                size={16}
-                                className={config.badge.split(" ")[1]}
-                              />
-                              <span
-                                className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-[0.5px] ${config.badge}`}
-                              >
+                              <SevIcon size={16} className={config.badge.split(" ")[1]} />
+                              <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-[0.5px] ${config.badge}`}>
                                 {finding.severity}
                               </span>
-                              <span className="px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-[0.5px] bg-white/[0.04] text-text-muted/50 border border-white/[0.05]">
-                                {CATEGORY_LABELS[finding.category] ||
-                                  finding.category}
+                              <span
+                                className="px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-[0.5px] text-text-muted/50 border"
+                                style={{ background: ov(0.04), borderColor: ov(0.05) }}
+                              >
+                                {CATEGORY_LABELS[finding.category] || finding.category}
                               </span>
                             </div>
                             {finding.location && (
-                              <span className="text-[10px] text-text-muted/30 font-mono">
-                                {finding.location}
-                              </span>
+                              <span className="text-[10px] text-text-muted/30 font-mono">{finding.location}</span>
                             )}
                           </div>
-                          <h4 className="font-bold text-text-primary mb-1.5">
-                            {finding.title}
-                          </h4>
-                          <p className="text-sm text-text-muted/60 mb-3 leading-relaxed">
-                            {finding.description}
-                          </p>
+                          <h4 className="font-bold text-text-primary mb-1.5">{finding.title}</h4>
+                          <p className="text-sm text-text-muted/60 mb-3 leading-relaxed">{finding.description}</p>
 
-                          {(finding.arabic_value ||
-                            finding.english_value) && (
+                          {(finding.arabic_value || finding.english_value) && (
                             <div className="flex flex-wrap gap-3 mb-3">
                               {finding.arabic_value && (
-                                <div className="bg-white/[0.03] rounded-xl px-4 py-2 text-sm border border-white/[0.05]">
-                                  <span className="text-text-muted/30 text-[10px] font-bold uppercase tracking-[0.5px]">
-                                    AR{" "}
-                                  </span>
-                                  <span
-                                    dir="rtl"
-                                    className="font-semibold text-text-primary/80"
-                                  >
-                                    {finding.arabic_value}
-                                  </span>
+                                <div
+                                  className="rounded-xl px-4 py-2 text-sm border"
+                                  style={{ background: ov(0.03), borderColor: ov(0.05) }}
+                                >
+                                  <span className="text-text-muted/30 text-[10px] font-bold uppercase tracking-[0.5px]">AR </span>
+                                  <span dir="rtl" className="font-semibold text-text-primary/80">{finding.arabic_value}</span>
                                 </div>
                               )}
                               {finding.english_value && (
-                                <div className="bg-white/[0.03] rounded-xl px-4 py-2 text-sm border border-white/[0.05]">
-                                  <span className="text-text-muted/30 text-[10px] font-bold uppercase tracking-[0.5px]">
-                                    EN{" "}
-                                  </span>
-                                  <span className="font-semibold text-text-primary/80">
-                                    {finding.english_value}
-                                  </span>
+                                <div
+                                  className="rounded-xl px-4 py-2 text-sm border"
+                                  style={{ background: ov(0.03), borderColor: ov(0.05) }}
+                                >
+                                  <span className="text-text-muted/30 text-[10px] font-bold uppercase tracking-[0.5px]">EN </span>
+                                  <span className="font-semibold text-text-primary/80">{finding.english_value}</span>
                                 </div>
                               )}
                             </div>
                           )}
 
                           {finding.recommendation && (
-                            <div className="bg-white/[0.02] rounded-xl px-4 py-2.5 border border-white/[0.04]">
-                              <p className="text-[11px] text-text-muted/40 leading-relaxed">
-                                {finding.recommendation}
-                              </p>
+                            <div
+                              className="rounded-xl px-4 py-2.5 border"
+                              style={{ background: ov(0.02), borderColor: ov(0.04) }}
+                            >
+                              <p className="text-[11px] text-text-muted/40 leading-relaxed">{finding.recommendation}</p>
                             </div>
                           )}
                         </motion.div>
@@ -566,65 +532,39 @@ export default function ReviewResultsPage() {
                         key={i}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          delay: 0.05 * i,
-                          duration: 0.4,
-                          ease,
-                        }}
-                        className="rounded-2xl overflow-hidden bg-white/[0.02] border border-white/[0.06] backdrop-blur-sm"
+                        transition={{ delay: 0.05 * i, duration: 0.4, ease }}
+                        className="rounded-2xl overflow-hidden backdrop-blur-sm border"
+                        style={{ background: ov(0.02), borderColor: ov(0.06) }}
                       >
-                        <div className="px-5 py-3.5 border-b border-white/[0.05] bg-gradient-to-r from-white/[0.03] to-transparent">
+                        <div
+                          className="px-5 py-3.5 border-b"
+                          style={{ borderColor: ov(0.05), background: ov(0.03) }}
+                        >
                           <h4 className="font-bold text-text-primary text-sm">
-                            {STATEMENT_LABELS[summary.statement_type] ||
-                              summary.statement_type}
+                            {STATEMENT_LABELS[summary.statement_type] || summary.statement_type}
                           </h4>
                         </div>
-                        <div className="grid grid-cols-2 divide-x divide-white/[0.05]">
-                          <div className="p-5">
-                            <p className="text-[10px] text-text-muted/30 uppercase tracking-[1px] font-bold mb-2.5">
-                              English
-                            </p>
-                            <p className="font-semibold text-text-primary/80 text-sm">
-                              {summary.title_en || "—"}
-                            </p>
+                        <div
+                          className="grid grid-cols-2"
+                          style={{ columnGap: 0 }}
+                        >
+                          <div className="p-5" style={{ borderRight: `1px solid ${ov(0.05)}` }}>
+                            <p className="text-[10px] text-text-muted/30 uppercase tracking-[1px] font-bold mb-2.5">English</p>
+                            <p className="font-semibold text-text-primary/80 text-sm">{summary.title_en || "\u2014"}</p>
                             <div className="mt-3 space-y-1 text-xs text-text-muted/40">
-                              <p>
-                                Items:{" "}
-                                <span className="text-text-muted/60 font-medium">
-                                  {summary.line_items_count}
-                                </span>
-                              </p>
+                              <p>Items: <span className="text-text-muted/60 font-medium">{summary.line_items_count}</span></p>
                               {summary.total_amount !== null && (
-                                <p>
-                                  Total:{" "}
-                                  <span className="text-text-muted/60 font-medium">
-                                    {summary.total_amount?.toLocaleString()}
-                                  </span>
-                                </p>
+                                <p>Total: <span className="text-text-muted/60 font-medium">{summary.total_amount?.toLocaleString()}</span></p>
                               )}
                             </div>
                           </div>
                           <div className="p-5" dir="rtl">
-                            <p className="text-[10px] text-text-muted/30 uppercase tracking-[1px] font-bold mb-2.5">
-                              العربية
-                            </p>
-                            <p className="font-semibold text-text-primary/80 text-sm">
-                              {summary.title_ar || "—"}
-                            </p>
+                            <p className="text-[10px] text-text-muted/30 uppercase tracking-[1px] font-bold mb-2.5">{"\u0627\u0644\u0639\u0631\u0628\u064a\u0629"}</p>
+                            <p className="font-semibold text-text-primary/80 text-sm">{summary.title_ar || "\u2014"}</p>
                             <div className="mt-3 space-y-1 text-xs text-text-muted/40">
-                              <p>
-                                البنود:{" "}
-                                <span className="text-text-muted/60 font-medium">
-                                  {summary.line_items_count}
-                                </span>
-                              </p>
+                              <p>{"\u0627\u0644\u0628\u0646\u0648\u062f"}: <span className="text-text-muted/60 font-medium">{summary.line_items_count}</span></p>
                               {summary.total_amount !== null && (
-                                <p>
-                                  الإجمالي:{" "}
-                                  <span className="text-text-muted/60 font-medium">
-                                    {summary.total_amount?.toLocaleString()}
-                                  </span>
-                                </p>
+                                <p>{"\u0627\u0644\u0625\u062c\u0645\u0627\u0644\u064a"}: <span className="text-text-muted/60 font-medium">{summary.total_amount?.toLocaleString()}</span></p>
                               )}
                             </div>
                           </div>
@@ -632,8 +572,7 @@ export default function ReviewResultsPage() {
                         {summary.issues_count > 0 && (
                           <div className="bg-red-500/8 px-5 py-2.5 border-t border-red-500/10">
                             <p className="text-[11px] text-red-400 font-bold">
-                              {summary.issues_count} issue
-                              {summary.issues_count > 1 ? "s" : ""} found
+                              {summary.issues_count} issue{summary.issues_count > 1 ? "s" : ""} found
                             </p>
                           </div>
                         )}
@@ -653,70 +592,41 @@ export default function ReviewResultsPage() {
                 >
                   {(() => {
                     const numberFindings = results.findings.filter(
-                      (f) =>
-                        f.category === "numbers_mismatch" &&
-                        (f.arabic_value || f.english_value)
+                      (f) => f.category === "numbers_mismatch" && (f.arabic_value || f.english_value)
                     );
                     if (numberFindings.length === 0) {
                       return (
                         <div className="p-10 text-center">
                           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-emerald-500/10 mb-3">
-                            <CheckCircle2
-                              size={28}
-                              className="text-emerald-400"
-                            />
+                            <CheckCircle2 size={28} className="text-emerald-400" />
                           </div>
-                          <p className="text-text-primary font-bold">
-                            No number discrepancies found
-                          </p>
-                          <p className="text-text-muted/40 text-sm mt-1">
-                            All figures match between versions.
-                          </p>
+                          <p className="text-text-primary font-bold">No number discrepancies found</p>
+                          <p className="text-text-muted/40 text-sm mt-1">All figures match between versions.</p>
                         </div>
                       );
                     }
                     return (
                       <table className="w-full text-sm">
                         <thead>
-                          <tr className="border-b border-white/[0.05] bg-white/[0.02]">
-                            <th className="text-left px-5 py-3.5 text-text-muted/30 text-[10px] font-bold uppercase tracking-[1px]">
-                              Issue
-                            </th>
-                            <th className="text-left px-5 py-3.5 text-text-muted/30 text-[10px] font-bold uppercase tracking-[1px]">
-                              EN Value
-                            </th>
-                            <th className="text-right px-5 py-3.5 text-text-muted/30 text-[10px] font-bold uppercase tracking-[1px]">
-                              AR Value
-                            </th>
-                            <th className="text-left px-5 py-3.5 text-text-muted/30 text-[10px] font-bold uppercase tracking-[1px]">
-                              Severity
-                            </th>
+                          <tr style={{ borderBottom: `1px solid ${ov(0.05)}`, background: ov(0.02) }}>
+                            <th className="text-left px-5 py-3.5 text-text-muted/30 text-[10px] font-bold uppercase tracking-[1px]">Issue</th>
+                            <th className="text-left px-5 py-3.5 text-text-muted/30 text-[10px] font-bold uppercase tracking-[1px]">EN Value</th>
+                            <th className="text-right px-5 py-3.5 text-text-muted/30 text-[10px] font-bold uppercase tracking-[1px]">AR Value</th>
+                            <th className="text-left px-5 py-3.5 text-text-muted/30 text-[10px] font-bold uppercase tracking-[1px]">Severity</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/[0.04]">
-                          {numberFindings.map((f) => (
+                        <tbody>
+                          {numberFindings.map((f, i) => (
                             <tr
                               key={f.id}
-                              className="hover:bg-white/[0.02] transition-colors duration-200"
+                              className="transition-colors duration-200"
+                              style={{ borderBottom: i < numberFindings.length - 1 ? `1px solid ${ov(0.04)}` : undefined }}
                             >
-                              <td className="px-5 py-3.5 text-text-primary/80 font-medium">
-                                {f.title}
-                              </td>
-                              <td className="px-5 py-3.5 font-mono text-text-muted/50 text-[13px]">
-                                {f.english_value || "—"}
-                              </td>
-                              <td
-                                className="px-5 py-3.5 font-mono text-text-muted/50 text-right text-[13px]"
-                                dir="rtl"
-                              >
-                                {f.arabic_value || "—"}
-                              </td>
+                              <td className="px-5 py-3.5 text-text-primary/80 font-medium">{f.title}</td>
+                              <td className="px-5 py-3.5 font-mono text-text-muted/50 text-[13px]">{f.english_value || "\u2014"}</td>
+                              <td className="px-5 py-3.5 font-mono text-text-muted/50 text-right text-[13px]" dir="rtl">{f.arabic_value || "\u2014"}</td>
                               <td className="px-5 py-3.5">
-                                <span
-                                  className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-[0.5px] ${
-                                    SEVERITY_CONFIG[f.severity].badge
-                                  }`}
-                                >
+                                <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-[0.5px] ${SEVERITY_CONFIG[f.severity].badge}`}>
                                   {f.severity}
                                 </span>
                               </td>
