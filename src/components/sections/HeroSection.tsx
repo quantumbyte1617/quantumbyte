@@ -120,7 +120,7 @@ export default function HeroSection() {
             }}
             className="mockup-perspective"
           >
-            <BrowserFrame url="quantumbyte.app/downloader">
+            <BrowserFrame url="quantumbyte.app">
               <HeroMockupContent />
             </BrowserFrame>
           </motion.div>

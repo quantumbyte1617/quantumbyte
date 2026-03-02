@@ -1,11 +1,7 @@
 import {
   Download,
   FileSearch,
-  FileText,
-  Image,
-  Link,
-  Wrench,
-  QrCode,
+  MessageSquare,
   Github,
   Twitter,
   Linkedin,
@@ -34,11 +30,10 @@ export interface App {
   title: string;
   description: string;
   href: string;
-  status: "live" | "coming-soon";
+  status: "live";
   tags: string[];
   accent: string;
   accentBg: string;
-  progress?: number;
 }
 
 export const apps: App[] = [
@@ -47,7 +42,7 @@ export const apps: App[] = [
     title: "Social Media Video Downloader",
     description:
       "Download videos from YouTube, Instagram, TikTok, Twitter, and more. Paste a link, pick a format, and download.",
-    href: "/downloader",
+    href: "/Video_downloader",
     status: "live",
     tags: ["YouTube", "Instagram", "TikTok", "Twitter"],
     accent: "text-accent-cyan",
@@ -65,64 +60,15 @@ export const apps: App[] = [
     accentBg: "bg-accent-purple",
   },
   {
-    icon: Image,
-    title: "Image Compressor",
+    icon: MessageSquare,
+    title: "AI Discussion",
     description:
-      "Compress and resize images without losing quality. Supports PNG, JPEG, and WebP.",
-    href: "#",
-    status: "coming-soon",
-    tags: ["PNG", "JPEG", "WebP"],
-    accent: "text-accent-purple",
-    accentBg: "bg-accent-purple",
-    progress: 70,
-  },
-  {
-    icon: FileText,
-    title: "PDF Tools",
-    description:
-      "Merge, split, and convert PDFs. Simple tools for everyday document tasks.",
-    href: "#",
-    status: "coming-soon",
-    tags: ["Merge", "Split", "Convert"],
+      "A real-time AI discussion room where Claude, GPT, and Gemini debate any topic you choose. Watch the models think, argue, and agree.",
+    href: "/ai_discussion",
+    status: "live",
+    tags: ["Claude", "GPT", "Gemini", "Real-time"],
     accent: "text-accent-pink",
     accentBg: "bg-accent-pink",
-    progress: 45,
-  },
-  {
-    icon: Link,
-    title: "URL Shortener",
-    description:
-      "Shorten long URLs into clean, shareable links with click tracking.",
-    href: "#",
-    status: "coming-soon",
-    tags: ["Short Links", "Analytics"],
-    accent: "text-emerald-400",
-    accentBg: "bg-emerald-400",
-    progress: 30,
-  },
-  {
-    icon: QrCode,
-    title: "QR Code Generator",
-    description:
-      "Generate QR codes for URLs, text, Wi-Fi, and contacts. Download as PNG or SVG.",
-    href: "#",
-    status: "coming-soon",
-    tags: ["URL", "Wi-Fi", "vCard"],
-    accent: "text-amber-400",
-    accentBg: "bg-amber-400",
-    progress: 20,
-  },
-  {
-    icon: Wrench,
-    title: "Dev Toolbox",
-    description:
-      "JSON formatter, Base64 encoder, color picker, regex tester, and more — all in one place.",
-    href: "#",
-    status: "coming-soon",
-    tags: ["JSON", "Base64", "Regex"],
-    accent: "text-rose-400",
-    accentBg: "bg-rose-400",
-    progress: 55,
   },
 ];
 

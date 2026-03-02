@@ -40,8 +40,7 @@ export default function NotifySection() {
                 Get notified when new tools launch
               </h3>
               <p className="text-text-muted text-sm mb-6 max-w-md mx-auto">
-                We&apos;ll send you a one-time email when Image Compressor, PDF Tools, or
-                any new app hits 100%. No spam, ever.
+                We&apos;ll send you a one-time email when new tools launch. No spam, ever.
               </p>
               <form
                 onSubmit={handleSubmit}
