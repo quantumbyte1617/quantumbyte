@@ -85,7 +85,7 @@ export default function AIDiscussionPage() {
 
           {/* CTA */}
           <a
-            href="https://ai-discussion-room.vercel.app"
+            href="https://ai-council.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full py-3.5 bg-text-primary text-bg-primary rounded-xl font-semibold text-sm hover:opacity-85 transition-opacity flex items-center justify-center gap-2"
