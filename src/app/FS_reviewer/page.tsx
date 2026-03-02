@@ -77,6 +77,16 @@ export default function ReviewerPage() {
 
   const canSubmit = arabicFile && englishFile && status !== "uploading";
 
+  const safeJson = async (res: Response) => {
+    const text = await res.text();
+    if (!text) return {};
+    try {
+      return JSON.parse(text);
+    } catch {
+      return { detail: text };
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!arabicFile || !englishFile) return;
@@ -94,20 +104,24 @@ export default function ReviewerPage() {
         body: formData,
       });
 
+      const uploadData = await safeJson(uploadRes);
+
       if (!uploadRes.ok) {
-        const err = await uploadRes.json();
-        throw new Error(err.detail || "Upload failed");
+        throw new Error(uploadData.detail || `Upload failed (${uploadRes.status})`);
       }
 
-      const { session_id } = await uploadRes.json();
+      const { session_id } = uploadData;
+      if (!session_id) {
+        throw new Error("Server did not return a session ID.");
+      }
 
       const reviewRes = await fetch(`/api/FS_reviewer/review/${session_id}`, {
         method: "POST",
       });
 
       if (!reviewRes.ok) {
-        const err = await reviewRes.json();
-        throw new Error(err.detail || "Failed to start review");
+        const reviewData = await safeJson(reviewRes);
+        throw new Error(reviewData.detail || `Failed to start review (${reviewRes.status})`);
       }
 
       router.push(`/FS_reviewer/review/${session_id}`);
