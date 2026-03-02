@@ -4,7 +4,7 @@ import { extractFinancialData, compareVersions } from "@/lib/reviewer/claude";
 import { quickNumbersCheck } from "@/lib/reviewer/comparison";
 import type { Finding, StatementSummary, ReviewResults } from "@/lib/reviewer/types";
 
-export const maxDuration = 300;
+export const maxDuration = 60;
 
 export async function POST(
   _request: NextRequest,
