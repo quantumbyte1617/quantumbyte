@@ -1,0 +1,52 @@
+// Simple Node.js script to generate an OG image as SVG
+// Run: node scripts/generate-og-image.js
+// Then convert to PNG using any tool
+
+const fs = require("fs");
+const path = require("path");
+
+const svg = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0f"/>
+      <stop offset="100%" stop-color="#111118"/>
+    </linearGradient>
+    <linearGradient id="text" x1="0" y1="0" x2="600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="200" cy="200" r="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#00f0ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="1000" cy="150" r="350" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <!-- Border -->
+  <rect x="1" y="1" width="1198" height="628" rx="0" fill="none" stroke="#1e1e2e" stroke-width="2"/>
+
+  <!-- Title -->
+  <text x="600" y="260" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="80" fill="url(#text)">QuantumByte</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="330" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="400" font-size="28" fill="#888899">Free, fast, and simple tools that just work.</text>
+
+  <!-- Tags -->
+  <text x="600" y="400" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="500" font-size="18" fill="#00f0ff" opacity="0.7">Video Downloader  ·  JSON Formatter  ·  Password Generator  ·  Color Picker</text>
+
+  <!-- URL -->
+  <text x="600" y="560" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="22" fill="#f0f0f0" opacity="0.4">quantumbyte.app</text>
+</svg>`;
+
+const outDir = path.join(__dirname, "..", "public");
+fs.writeFileSync(path.join(outDir, "og-image.svg"), svg);
+console.log("OG image SVG generated at public/og-image.svg");
+console.log("To create PNG: Use any SVG-to-PNG converter or browser screenshot.");

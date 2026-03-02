@@ -1,0 +1,344 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════
+   DEFAULT THEME: Apple-style Silver Grey
+   ═══════════════════════════════════════════ */
+@theme {
+  --color-bg-primary: #fbfbfd;
+  --color-bg-secondary: #f5f5f7;
+  --color-bg-card: #ffffff;
+  --color-accent-cyan: #0071e3;
+  --color-accent-purple: #7c3aed;
+  --color-accent-pink: #bf4580;
+  --color-text-primary: #1d1d1f;
+  --color-text-muted: #86868b;
+  --color-border: #d2d2d7;
+
+  --font-heading: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ─── Dark Mode Override ─── */
+[data-theme="dark"] {
+  --color-bg-primary: #0a0a0f;
+  --color-bg-secondary: #111118;
+  --color-bg-card: #14141e;
+  --color-accent-cyan: #00f0ff;
+  --color-accent-purple: #8b5cf6;
+  --color-accent-pink: #ec4899;
+  --color-text-primary: #f0f0f0;
+  --color-text-muted: #888899;
+  --color-border: #1e1e2e;
+}
+
+/* ═══════════════════════════════════════════
+   Custom Scrollbar
+   ═══════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg-primary); }
+::-webkit-scrollbar-thumb { background: #c7c7cc; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent-cyan); }
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #2a2a3e; }
+
+/* ═══════════════════════════════════════════
+   Glow Utilities (subtle in light, vibrant in dark)
+   ═══════════════════════════════════════════ */
+.glow-cyan {
+  box-shadow: 0 2px 12px rgba(0, 113, 227, 0.15);
+}
+.glow-cyan-sm {
+  box-shadow: 0 1px 8px rgba(0, 113, 227, 0.1);
+}
+.glow-purple {
+  box-shadow: 0 2px 12px rgba(124, 58, 237, 0.15);
+}
+.text-glow-cyan {
+  text-shadow: none;
+}
+
+[data-theme="dark"] .glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 60px rgba(0, 240, 255, 0.1);
+}
+[data-theme="dark"] .glow-cyan-sm {
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2), 0 0 30px rgba(0, 240, 255, 0.05);
+}
+[data-theme="dark"] .glow-purple {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
+}
+[data-theme="dark"] .text-glow-cyan {
+  text-shadow: 0 0 30px rgba(0, 240, 255, 0.5), 0 0 60px rgba(0, 240, 255, 0.2);
+}
+
+/* ═══════════════════════════════════════════
+   Gradient Text
+   ═══════════════════════════════════════════ */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ═══════════════════════════════════════════
+   Glass Effect (Header / Overlays)
+   ═══════════════════════════════════════════ */
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .glass {
+  background: rgba(14, 14, 20, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ═══════════════════════════════════════════
+   Glass Card (App cards, value cards)
+   ═══════════════════════════════════════════ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease;
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 113, 227, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06), 0 0 20px rgba(0, 113, 227, 0.05);
+}
+
+[data-theme="dark"] .glass-card {
+  background: rgba(20, 20, 30, 0.6);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+[data-theme="dark"] .glass-card:hover {
+  border-color: rgba(0, 240, 255, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 240, 255, 0.06);
+}
+
+/* ═══════════════════════════════════════════
+   Featured Card (Live apps)
+   ═══════════════════════════════════════════ */
+.featured-card {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.04), rgba(124, 58, 237, 0.04));
+  border: 1px solid rgba(0, 113, 227, 0.12);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.featured-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 0 30px rgba(0, 113, 227, 0.06);
+}
+
+[data-theme="dark"] .featured-card {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.06), rgba(139, 92, 246, 0.06));
+  border-color: rgba(0, 240, 255, 0.15);
+}
+[data-theme="dark"] .featured-card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 240, 255, 0.1);
+}
+
+/* ═══════════════════════════════════════════
+   Floating Orb
+   ═══════════════════════════════════════════ */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .orb {
+  opacity: 0.3;
+}
+
+/* ═══════════════════════════════════════════
+   Mesh Gradient Background
+   ═══════════════════════════════════════════ */
+.mesh-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0, 113, 227, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(124, 58, 237, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 50% 80%, rgba(191, 69, 128, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .mesh-gradient {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0, 240, 255, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 50% 80%, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
+}
+
+/* ═══════════════════════════════════════════
+   Progress Bar
+   ═══════════════════════════════════════════ */
+.progress-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="dark"] .progress-bar {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ═══════════════════════════════════════════
+   Playground Glass
+   ═══════════════════════════════════════════ */
+.playground-glass {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+}
+
+[data-theme="dark"] .playground-glass {
+  background: rgba(14, 14, 20, 0.7);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ═══════════════════════════════════════════
+   Selection
+   ═══════════════════════════════════════════ */
+::selection {
+  background: rgba(0, 113, 227, 0.15);
+  color: #1d1d1f;
+}
+
+[data-theme="dark"] ::selection {
+  background: rgba(0, 240, 255, 0.3);
+  color: white;
+}
+
+/* ═══════════════════════════════════════════
+   Section Divider
+   ═══════════════════════════════════════════ */
+.section-glow-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 113, 227, 0.1), transparent);
+}
+
+[data-theme="dark"] .section-glow-divider {
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
+}
+
+/* ═══════════════════════════════════════════
+   JSON Syntax Highlighting
+   ═══════════════════════════════════════════ */
+.json-key { color: #0071e3; }
+.json-string { color: #16a34a; }
+.json-number { color: #7c3aed; }
+.json-boolean { color: #ea580c; }
+.json-null { color: #bf4580; font-style: italic; }
+.json-punctuation { color: #86868b; }
+
+[data-theme="dark"] .json-key { color: #00f0ff; }
+[data-theme="dark"] .json-string { color: #a3e635; }
+[data-theme="dark"] .json-number { color: #c084fc; }
+[data-theme="dark"] .json-boolean { color: #fb923c; }
+[data-theme="dark"] .json-null { color: #f472b6; }
+[data-theme="dark"] .json-punctuation { color: #888899; }
+
+/* ═══════════════════════════════════════════
+   Notify Section
+   ═══════════════════════════════════════════ */
+.notify-glass {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.03), rgba(124, 58, 237, 0.03));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 113, 227, 0.1);
+  border-radius: 16px;
+}
+
+[data-theme="dark"] .notify-glass {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.04), rgba(139, 92, 246, 0.04));
+  border-color: rgba(0, 240, 255, 0.1);
+}
+
+/* ═══════════════════════════════════════════
+   Theme Toggle Button
+   ═══════════════════════════════════════════ */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.theme-toggle:hover {
+  color: var(--color-accent-cyan);
+  border-color: rgba(0, 113, 227, 0.25);
+  background: rgba(0, 113, 227, 0.05);
+}
+
+[data-theme="dark"] .theme-toggle {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+[data-theme="dark"] .theme-toggle:hover {
+  color: #00f0ff;
+  border-color: rgba(0, 240, 255, 0.2);
+  background: rgba(0, 240, 255, 0.05);
+}
+
+/* ═══════════════════════════════════════════
+   Ambient Background Images
+   ═══════════════════════════════════════════ */
+.ambient-image {
+  opacity: 0.06;
+}
+[data-theme="dark"] .ambient-image {
+  opacity: 0.12;
+}
+
+/* ═══════════════════════════════════════════
+   Device Mockup Perspective
+   ═══════════════════════════════════════════ */
+.mockup-perspective {
+  transform: perspective(1200px) rotateY(-8deg) rotateX(3deg);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mockup-perspective:hover {
+  transform: perspective(1200px) rotateY(-2deg) rotateX(1deg);
+}
