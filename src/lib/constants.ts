@@ -58,7 +58,7 @@ export const apps: App[] = [
     title: "Financial Statements Reviewer",
     description:
       "AI-powered cross-checking of Arabic and English financial statements. Validates numbers, terminology, and IFRS compliance.",
-    href: "/reviewer",
+    href: "/FS_reviewer",
     status: "live",
     tags: ["Arabic/English", "IFRS", "Audit", "AI"],
     accent: "text-accent-purple",
