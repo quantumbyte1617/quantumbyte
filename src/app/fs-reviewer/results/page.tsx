@@ -124,7 +124,7 @@ export default function ResultsPage() {
             Please upload and analyze documents first.
           </p>
           <a
-            href="/FS_reviewer"
+            href="/fs-reviewer"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-xl text-sm font-bold text-bg-primary hover:brightness-110 transition-all"
           >
             <RotateCcw size={14} />
@@ -140,7 +140,7 @@ export default function ResultsPage() {
       <div className="max-w-5xl mx-auto px-5 py-10 md:py-16">
         {/* Back link */}
         <motion.a
-          href="/FS_reviewer"
+          href="/fs-reviewer"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-accent-cyan transition-colors mb-10"
@@ -226,7 +226,7 @@ export default function ResultsPage() {
             Print Report
           </button>
           <a
-            href="/FS_reviewer"
+            href="/fs-reviewer"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-xl text-sm font-bold text-bg-primary hover:brightness-110 transition-all duration-300"
           >
             <RotateCcw size={14} />

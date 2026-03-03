@@ -89,7 +89,7 @@ export default function ReviewerPage() {
       formData.append("arabic_file", arabicFile);
       formData.append("english_file", englishFile);
 
-      const res = await fetch("/api/FS_reviewer/analyze", {
+      const res = await fetch("/api/fs-reviewer/analyze", {
         method: "POST",
         body: formData,
       });
@@ -107,7 +107,7 @@ export default function ReviewerPage() {
       }
 
       sessionStorage.setItem("fs_review_results", JSON.stringify(data));
-      router.push("/FS_reviewer/results");
+      router.push("/fs-reviewer/results");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
       setStatus("error");

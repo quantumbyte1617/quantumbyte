@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { env } from "../env";
 
 const EXTRACTION_PROMPT = `You are a financial statement auditor. Extract all structured financial data from this {language} financial statement document.
 
@@ -101,9 +102,7 @@ ENGLISH RAW TEXT:
 {english_text}`;
 
 function getClient() {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error("ANTHROPIC_API_KEY is not set");
-  return new Anthropic({ apiKey });
+  return new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
 }
 
 function parseJsonResponse(text: string): Record<string, unknown> {
@@ -130,7 +129,7 @@ export async function extractFinancialData(
   language: string
 ): Promise<Record<string, unknown>> {
   const client = getClient();
-  const model = process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514";
+  const model = env.CLAUDE_MODEL ?? "claude-sonnet-4-20250514";
 
   const prompt = EXTRACTION_PROMPT.replace("{language}", language).replace(
     "{document_text}",
@@ -155,7 +154,7 @@ export async function compareVersions(
   englishText: string
 ): Promise<Record<string, unknown>> {
   const client = getClient();
-  const model = process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514";
+  const model = env.CLAUDE_MODEL ?? "claude-sonnet-4-20250514";
 
   const prompt = COMPARISON_PROMPT.replace(
     "{arabic_data}",

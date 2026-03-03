@@ -2,6 +2,7 @@ import {
   Download,
   FileSearch,
   MessageSquare,
+  KeyRound,
   Github,
   Twitter,
   Linkedin,
@@ -37,7 +38,7 @@ export const apps: App[] = [
     title: "Video Downloader",
     description:
       "Download videos from YouTube, Instagram, TikTok, and more. Paste a link, pick a format, done.",
-    href: "/Video_downloader",
+    href: "/video-downloader",
     tags: ["YouTube", "Instagram", "TikTok", "Twitter"],
     accent: "text-accent-cyan",
   },
@@ -46,7 +47,7 @@ export const apps: App[] = [
     title: "FS Reviewer",
     description:
       "AI-powered cross-checking of Arabic and English financial statements. Validates numbers, terminology, and IFRS compliance.",
-    href: "/FS_reviewer",
+    href: "/fs-reviewer",
     tags: ["Arabic/English", "IFRS", "Audit", "AI"],
     accent: "text-accent-purple",
   },
@@ -55,9 +56,18 @@ export const apps: App[] = [
     title: "AI Discussion",
     description:
       "A real-time discussion room where Claude, GPT, and Gemini debate any topic you choose.",
-    href: "/ai_discussion",
+    href: "/ai-discussion",
     tags: ["Claude", "GPT", "Gemini", "Real-time"],
     accent: "text-accent-pink",
+  },
+  {
+    icon: KeyRound,
+    title: "PDF Unlocker",
+    description:
+      "Remove the password from a protected PDF. Upload the file, enter the password, and download the unlocked version instantly.",
+    href: "/pdf-unlocker",
+    tags: ["PDF", "Password", "Decrypt", "Unlock"],
+    accent: "text-accent-cyan",
   },
 ];
 

@@ -10,6 +10,7 @@ import {
   Layers,
   Bot,
   ChevronDown,
+  KeyRound,
 } from "lucide-react";
 import QuantumBackground from "@/components/QuantumBackground";
 
@@ -18,21 +19,22 @@ const menus = [
     label: "Financial Tools",
     icon: Landmark,
     items: [
-      { icon: FileSearch, label: "FS Reviewer", href: "/FS_reviewer" },
+      { icon: FileSearch, label: "FS Reviewer", href: "/fs-reviewer" },
     ],
   },
   {
     label: "General Tools",
     icon: Layers,
     items: [
-      { icon: Download, label: "Video Downloader", href: "/Video_downloader" },
+      { icon: Download, label: "Video Downloader", href: "/video-downloader" },
+      { icon: KeyRound, label: "PDF Unlocker", href: "/pdf-unlocker" },
     ],
   },
   {
     label: "AI Tools",
     icon: Bot,
     items: [
-      { icon: MessageSquare, label: "AI Discussion", href: "/ai_discussion" },
+      { icon: MessageSquare, label: "AI Discussion", href: "/ai-discussion" },
     ],
   },
 ];
@@ -75,6 +77,8 @@ function NavDropdown({
               <a
                 key={item.href}
                 href={item.href}
+                target={item.href.startsWith("http") ? "_blank" : undefined}
+                rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 className="flex items-center gap-3 px-4 py-3 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors duration-150"
               >
                 <Icon size={15} className="text-[#00f0ff]/60" />
